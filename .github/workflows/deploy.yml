@@ -1,5 +1,5 @@
 name: Deploy
-run-name: Deploy ${{ env.REPO }}/${{ env.REF }} with commit ${{ env.SHA }}
+run-name: Deploy ${{ github.event.client_payload.repo || 'overaboard/overaboard' }} with commit ${{ github.event.client_payload.sha || inputs.commit }}
 
 on:
   repository_dispatch:

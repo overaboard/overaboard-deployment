@@ -27,6 +27,7 @@ jobs:
         with:
           repository: ${{ env.DEPLOY_REPO }}
           ref: refs/heads/main
+          token: ${{ secrets.OVERABOARD_DEPLOYMENT }}
 
       - run: git checkout ${{ env.DEPLOY_SHA }}
 

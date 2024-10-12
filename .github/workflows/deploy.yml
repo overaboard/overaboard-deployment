@@ -28,6 +28,9 @@ jobs:
         with:
           repository: ${{ env.REPO }}
           ref: ${{ env.REF }}
+
+      - run: git checkout ${{ env.SHA }}
+
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:

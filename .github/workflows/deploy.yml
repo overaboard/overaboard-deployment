@@ -20,6 +20,7 @@ jobs:
     name: Deploy to fly.io
     runs-on: ubuntu-latest
     concurrency: deploy-group
+    if: ${{ github.event_name != 'repository_dispatch' || github.event.client_payload.ref == 'refs/heads/main' }}
 
     steps:
       - uses: actions/checkout@v4

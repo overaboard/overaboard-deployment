@@ -12,24 +12,22 @@ on:
         type: string
 
 env:
-  REPO: ${{ github.event.client_payload.repo }}
-  REF: ${{ github.event.client_payload.ref }}
-  SHA: ${{ github.event.client_payload.sha }}
+  DEPLOY_REPO: ${{ github.event.client_payload.repo || 'overaboard/overaboard' }}
+  DEPLOY_SHA: ${{ github.event.client_payload.sha || inputs.commit }}
 
 jobs:
   fly-dot-io:
     name: Deploy to fly.io
     runs-on: ubuntu-latest
     concurrency: deploy-group
-    if: ${{ env.BRANCH == 'main' }}
 
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: ${{ env.REPO }}
-          ref: ${{ env.REF }}
+          repository: ${{ env.DEPLOY_REPO }}
+          ref: refs/heads/main
 
-      - run: git checkout ${{ env.SHA }}
+      - run: git checkout ${{ env.DEPLOY_SHA }}
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
